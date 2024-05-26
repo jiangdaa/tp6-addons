@@ -13,7 +13,7 @@ use think\facade\Route;
 use think\facade\Db;
 use think\helper\Str;
 use think\route\Url;
-use think\Service;
+use jd\addons\Service;
 
 const DS = DIRECTORY_SEPARATOR;
 
@@ -340,7 +340,7 @@ if (!function_exists('set_addons_info')) {
         $addonsPath = $service->getAddonsPath();
 
         // 插件列表
-        $file = $addonsPath . $name . DIRECTORY_SEPARATOR . 'service.ini';
+        $file = $addonsPath . $name . DIRECTORY_SEPARATOR . 'info.ini';
         $addon = get_addons_instance($name);
         $array = $addon->setInfo($name, $array);
 
@@ -451,7 +451,7 @@ if (!function_exists('autoload_addons_config')) {
 
         // 读取插件目录及钩子列表
         $route = [];
-        $base = get_class_methods("\\think\\Addons");
+        $base = get_class_methods("\\jd\\Addons");
         $base = array_merge($base, ['init', 'initialize', 'install', 'uninstall', 'enabled', 'disabled']);
 
         $url_domain_deploy = Config::get('route.route_domain_deploy');

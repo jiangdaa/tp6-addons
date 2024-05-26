@@ -334,9 +334,8 @@ class Service extends \think\Service
                 $app->loadEvent(include $modEventPath);
             }
 
-            if (is_dir($mDir) && is_dir($mDir . DS . 'config')) {
-                $mDir = $mDir . DS . 'config';
-
+            if (is_dir($mDir) && is_dir($mDir  . 'config')) {
+                $mDir = $mDir  . 'config';
                 $modMiddlewarePath = $mDir . DS . 'middleware.php';
                 if (is_file($modMiddlewarePath)) {
                     $app->middleware->import(include $modMiddlewarePath, 'route');
