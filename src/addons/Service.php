@@ -14,7 +14,7 @@ use think\facade\Config;
 use think\facade\Lang;
 use think\facade\Cache;
 use think\facade\Event;
-use think\Addons;
+use jd\Addons;
 
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -58,9 +58,9 @@ class Service extends \think\Service
     {
         $this->registerRoutes(function (Route $route) {
             // 注册控制器路由
-            $execute = '\\wait\\addons\\Route::execute';
+            $execute = '\\jd\\addons\\Route::execute';
             $traffic = 'addons/:addon/[:module]/[:controller]/[:action]';
-            $route->rule($traffic, $execute)->middleware(Addons::class);
+            $route->rule($traffic, $execute);
 
             // 注册自定义路由
             $routes = (array)Config::get('addons.route', []);

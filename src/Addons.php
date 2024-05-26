@@ -7,6 +7,8 @@ declare(strict_types=1);
 namespace jd;
 
 use Exception;
+use think\App;
+use think\Request;
 use think\facade\Config;
 use think\facade\View;
 

@@ -31,11 +31,11 @@ Console::starting(function (Console $console) {
  */
 spl_autoload_register(function ($class) {
     $class = ltrim($class, '\\');
-    $rootPath  = app()->getRootPath();
+    $rootPath = app()->getRootPath();
     $namespace = 'addons';
     if (str_starts_with($class, $namespace)) {
         $class = substr($class, strlen($namespace));
-        $path  = '';
+        $path = '';
         if (($pos = strripos($class, '\\')) !== false) {
             $path = str_replace('\\', '/', substr($class, 0, $pos)) . '/';
             $class = substr($class, $pos + 1);
@@ -68,7 +68,7 @@ if (!function_exists('httpType')) {
             return 'https://';
         }
 
-        return 'http:'.'//';
+        return 'http:' . '//';
     }
 }
 
@@ -85,7 +85,7 @@ if (!function_exists('httpDomain')) {
         if (str_starts_with($domain, 'https://')) {
             return str_replace('https://', '', $domain);
         }
-        return str_replace('http:'.'//', '', $domain);
+        return str_replace('http:' . '//', '', $domain);
     }
 }
 
@@ -120,34 +120,34 @@ if (!function_exists('addons_url')) {
     {
         $request = app('request');
         if (!is_array($param)) {
-            parse_str((string) $param, $params);
+            parse_str((string)$param, $params);
             $param = $params;
         }
 
         if (empty($url)) {
-            $addons     = $request->addon;
+            $addons = $request->addon;
             $controller = $request->controller();
-            $module     = explode('.', $controller)[0];
+            $module = explode('.', $controller)[0];
             $controller = $module . '/' . explode('.', $controller)[1];
-            $action     = $request->action();
+            $action = $request->action();
         } else {
             $url = Str::studly($url);
             $url = parse_url($url);
             if (isset($url['scheme'])) {
-                $addons     = strtolower($url['scheme']);
+                $addons = strtolower($url['scheme']);
                 $controller = trim($url['host']);
-                $action     = trim($url['path'], '/');
+                $action = trim($url['path'], '/');
             } else {
-                $route      = explode('/', $url['path']);
-                $addons     = $request->addon;
-                $module     = lcfirst($request->param('module', 'frontend'));
-                $action     = array_pop($route);
+                $route = explode('/', $url['path']);
+                $addons = $request->addon;
+                $module = lcfirst($request->param('module', 'frontend'));
+                $action = array_pop($route);
                 $controller = array_pop($route) ?: $request->controller();
-                $controller = substr_replace($controller, '', 0, strlen($module)+1);
+                $controller = substr_replace($controller, '', 0, strlen($module) + 1);
             }
 
             // 解析URL带的参数
-            $controller = Str::snake((string) $controller);
+            $controller = Str::snake((string)$controller);
             if (isset($url['query'])) {
                 parse_str($url['query'], $query);
                 $param = array_merge($query, $param);
@@ -166,7 +166,7 @@ if (!function_exists('addons_path')) {
      * @return string
      * @author zero
      */
-    function addons_path(string $name=''): string
+    function addons_path(string $name = ''): string
     {
         $path = root_path() . 'addons' . DS;
         if (trim($name)) {
@@ -223,9 +223,9 @@ if (!function_exists('get_addons_class')) {
     /**
      * 获取插件类的类名
      *
-     * @param string $name    插件名
-     * @param string $type   返回命名空间类型
-     * @param null $class    当前类名
+     * @param string $name 插件名
+     * @param string $type 返回命名空间类型
+     * @param null $class 当前类名
      * @param string $module 模块名
      * @return string
      * @author zero
@@ -254,8 +254,12 @@ if (!function_exists('get_addons_class')) {
             default:
                 $namespace = '\\addons\\' . $name . '\\Plugin';
         }
+        try {
+            return class_exists($namespace) ? $namespace : '';
+        } catch (\Exception $exception) {
 
-        return class_exists($namespace) ? $namespace : '';
+        }
+        return '';
     }
 }
 
@@ -336,7 +340,7 @@ if (!function_exists('set_addons_info')) {
         $addonsPath = $service->getAddonsPath();
 
         // 插件列表
-        $file  = $addonsPath . $name . DIRECTORY_SEPARATOR . 'service.ini';
+        $file = $addonsPath . $name . DIRECTORY_SEPARATOR . 'service.ini';
         $addon = get_addons_instance($name);
         $array = $addon->setInfo($name, $array);
 
@@ -448,7 +452,7 @@ if (!function_exists('autoload_addons_config')) {
         // 读取插件目录及钩子列表
         $route = [];
         $base = get_class_methods("\\think\\Addons");
-        $base = array_merge($base, ['init','initialize','install', 'uninstall', 'enabled', 'disabled']);
+        $base = array_merge($base, ['init', 'initialize', 'install', 'uninstall', 'enabled', 'disabled']);
 
         $url_domain_deploy = Config::get('route.route_domain_deploy');
         $addons = get_addons_list();
@@ -483,7 +487,7 @@ if (!function_exists('autoload_addons_config')) {
                     $domain[] = [
                         'addons' => $addon['name'],
                         'domain' => $conf['domain']['value'],
-                        'rule'   => $rule
+                        'rule' => $rule
                     ];
                 } else {
                     $route = array_merge($route, $rule);
@@ -514,16 +518,15 @@ if (!function_exists('install_addons_sql')) {
         if (is_file($sqlFile)) {
             $gz = fopen($sqlFile, 'r');
             $sql = '';
-            while(1) {
+            while (1) {
                 $sql .= fgets($gz);
-                if(preg_match('/.*;$/', trim($sql))) {
-                    $sql = preg_replace('/(\/\*(\s|.)*?\*\/);/','',$sql);
-                    $sql = str_replace('__PREFIX__', config('database.connections.mysql.prefix'),$sql);
-                    if(str_contains($sql, 'CREATE TABLE')
+                if (preg_match('/.*;$/', trim($sql))) {
+                    $sql = preg_replace('/(\/\*(\s|.)*?\*\/);/', '', $sql);
+                    $sql = str_replace('__PREFIX__', config('database.connections.mysql.prefix'), $sql);
+                    if (str_contains($sql, 'CREATE TABLE')
                         || str_contains($sql, 'INSERT INTO')
                         || str_contains($sql, 'ALTER TABLE')
-                        || str_contains($sql, 'DROP TABLE'))
-                    {
+                        || str_contains($sql, 'DROP TABLE')) {
                         try {
                             Db::execute($sql);
                         } catch (Exception $e) {
@@ -532,7 +535,7 @@ if (!function_exists('install_addons_sql')) {
                     }
                     $sql = '';
                 }
-                if(feof($gz)) break;
+                if (feof($gz)) break;
             }
         }
         return true;
@@ -555,10 +558,10 @@ if (!function_exists('uninstall_addons_sql')) {
         $sqlFile = $addonsPath . $name . DS . 'uninstall.sql';
         if (is_file($sqlFile)) {
             $sql = file_get_contents($sqlFile);
-            $sql = str_replace('__PREFIX__', config('database.connections.mysql.prefix'),$sql);
-            $sql = explode("\r\n",$sql);
-            foreach ($sql as $v){
-                if(str_contains(strtolower($v), 'drop table')){
+            $sql = str_replace('__PREFIX__', config('database.connections.mysql.prefix'), $sql);
+            $sql = explode("\r\n", $sql);
+            foreach ($sql as $v) {
+                if (str_contains(strtolower($v), 'drop table')) {
                     try {
                         Db::execute($v);
                     } catch (Exception $e) {
@@ -634,7 +637,7 @@ if (!function_exists('get_target_assets_dir')) {
      */
     function get_target_assets_dir(string $name): string
     {
-        return app()->getRootPath() . "public".DS."static".DS."addons".DS."$name".DS;
+        return app()->getRootPath() . "public" . DS . "static" . DS . "addons" . DS . "$name" . DS;
     }
 }
 
@@ -648,11 +651,11 @@ if (!function_exists('is_really_writable')) {
      */
     function is_really_writable(string $dir): bool
     {
-        if (DIRECTORY_SEPARATOR == '/' AND @ ini_get("safe_mode") == FALSE) {
+        if (DIRECTORY_SEPARATOR == '/' and @ ini_get("safe_mode") == FALSE) {
             return is_writable($dir);
         }
 
-        if (!is_file($dir) OR ($fp = @fopen($dir, "r+")) === FALSE) {
+        if (!is_file($dir) or ($fp = @fopen($dir, "r+")) === FALSE) {
             return false;
         }
 
