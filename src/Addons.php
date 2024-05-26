@@ -139,7 +139,7 @@ abstract class Addons
         }
 
         $info = $this->info ?? [];
-        $infoFile = $this->addonPath . 'service.ini';
+        $infoFile = $this->addonPath . 'info.ini';
 
         if (is_file($infoFile)) {
             $fIni = parse_ini_file($infoFile, true, INI_SCANNER_TYPED) ?: [];

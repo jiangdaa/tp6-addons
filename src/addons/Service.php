@@ -146,7 +146,7 @@ class Service extends \think\Service
 
         // 插件钩子写入配置
         $config = Config::get('addons');
-        $base = get_class_methods('\\wait\\Addons');
+        $base = get_class_methods('\\think\\Addons');
         $base = array_merge($base, ['init', 'initialize', 'install', 'uninstall', 'enabled', 'disabled']);
         foreach (glob($this->getAddonsPath() . '*/*.php') as $addonsFile) {
             $info = pathinfo($addonsFile);
