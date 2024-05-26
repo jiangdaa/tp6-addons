@@ -9,7 +9,7 @@
     ],
      "autoload": {
         "psr-4": {
-            "think\\": "src/"
+            "jd\\": "src/"
         },
         "files": [
             "src/helper.php"
@@ -18,7 +18,7 @@
     "extra": {
         "think": {
             "services": [
-                "think\\addons\\Service"
+                "jd\\addons\\Service"
             ]
         }
     },

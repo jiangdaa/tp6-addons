@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
-namespace think\addons\command;
+namespace jd\addons\command;
 
 use InvalidArgumentException;
 use RuntimeException;

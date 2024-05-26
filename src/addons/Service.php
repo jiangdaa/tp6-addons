@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
-namespace think\addons;
+namespace jd\addons;
 
 use Exception;
 use FilesystemIterator;
@@ -143,7 +143,7 @@ class Service extends \think\Service
 
         // 插件钩子写入配置
         $config = Config::get('addons');
-        $base = get_class_methods('\\think\\Addons');
+        $base = get_class_methods('\\jd\\Addons');
         $base = array_merge($base, ['init', 'initialize', 'install', 'uninstall', 'enabled', 'disabled']);
         foreach (glob($this->getAddonsPath() . '*/*.php') as $addonsFile) {
             $info = pathinfo($addonsFile);
@@ -173,7 +173,7 @@ class Service extends \think\Service
      */
     private function loadLang(): void
     {
-        Lang::load([$this->app->getRootPath() . '/vendor/topwait/wait-addons/src/lang/zh-cn.php']);
+        Lang::load([$this->app->getRootPath() . '/vendor/jiangdaa/tp6-addons/src/lang/zh-cn.php']);
     }
 
     /**

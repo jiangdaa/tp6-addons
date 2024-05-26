@@ -4,7 +4,7 @@
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
-namespace think;
+namespace jd;
 
 use Exception;
 use think\facade\Config;
