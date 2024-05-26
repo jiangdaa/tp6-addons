@@ -1,9 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 基于ThinkPHP6的插件化模块 [WaitAdmin专属订造]
-// +----------------------------------------------------------------------
-// | github: https://github.com/topwait/wait-addons
-// | Author: zero <2474369941@qq.com>
+// | 基于ThinkPHP6的插件化模块
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
@@ -26,7 +23,7 @@ class SendConfig extends Command
     public function execute(Input $input, Output $output): void
     {
         // 获取默认配置文件
-        $content = file_get_contents(root_path() . 'vendor/topwait/wait-addons/src/config.php');
+        $content = file_get_contents(root_path() . 'vendor/jiangdaa/tp6-addons/src/config.php');
         $configPath = config_path() . '/';
         $configFile = $configPath . 'addons.php';
 
