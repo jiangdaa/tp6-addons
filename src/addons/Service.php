@@ -7,7 +7,7 @@
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
-namespace wait\addons;
+namespace think\addons;
 
 use Exception;
 use FilesystemIterator;
@@ -17,7 +17,7 @@ use think\facade\Config;
 use think\facade\Lang;
 use think\facade\Cache;
 use think\facade\Event;
-use wait\addons\middleware\Addons;
+use think\Addons;
 
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;

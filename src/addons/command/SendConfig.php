@@ -7,7 +7,7 @@
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
-namespace wait\addons\command;
+namespace think\addons\command;
 
 use InvalidArgumentException;
 use RuntimeException;

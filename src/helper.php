@@ -16,7 +16,7 @@ use think\facade\Route;
 use think\facade\Db;
 use think\helper\Str;
 use think\route\Url;
-use wait\addons\Service;
+use think\Service;
 
 const DS = DIRECTORY_SEPARATOR;
 
