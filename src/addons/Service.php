@@ -267,7 +267,7 @@ class Service extends \think\Service
 
                 if (is_file($this->addonsPath . $addonName . DS . $mDir)) {
                     continue;
-                }
+                } 
 
                 $addonRouteFile = $this->addonsPath . $addonName . DS . $mDir . DS . 'route.php';
                 $addonsRouteDir = $this->addonsPath . $addonName . DS . $mDir . DS . 'route' . DS;
