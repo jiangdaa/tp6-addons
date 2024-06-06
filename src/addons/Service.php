@@ -271,7 +271,8 @@ class Service extends \think\Service
 
                 $addonRouteFile = $this->addonsPath . $addonName . DS . $mDir . DS . 'route.php';
                 $addonsRouteDir = $this->addonsPath . $addonName . DS . $mDir . DS . 'route' . DS;
-                if (file_exists($addonsRouteDir) && is_dir($addonsRouteDir)) {
+                if (file_exists($addonRouteFile) && is_dir($addonsRouteDir)) {
+
                     $files = glob($addonsRouteDir . '*.php');
                     foreach ($files as $file) {
                         if (file_exists($file)) {
@@ -314,12 +315,11 @@ class Service extends \think\Service
                 }
             }
         }
+        if (!$module) return;
 
-       if(!$module) return;
         // 加载插件模块级配置
         if (is_dir($this->addonsPath . $module)) {
 
-            $mDir = $this->addonsPath . $module . DS . $rules[2] . DS;
             $modCommonPath = $this->addonsPath . $module . DS . 'common.php';
             if (is_file($modCommonPath)) {
                 include_once $modCommonPath;
@@ -334,16 +334,19 @@ class Service extends \think\Service
                 $app->loadEvent(include $modEventPath);
             }
 
-            if (is_dir($mDir) && is_dir($mDir  . 'config')) {
-                $mDir = $mDir  . 'config';
-                $modMiddlewarePath = $mDir . DS . 'middleware.php';
+            $moduleConfigDir = $this->addonsPath . $module . DS . 'config' . DS;
+
+            $multiApplicationDir = $this->addonsPath . $module . DS . $rules[2] . DS. 'config' . DS;
+            if (is_dir($multiApplicationDir)) {
+                $moduleConfigDir = $multiApplicationDir;
+            }
+            if (is_dir($moduleConfigDir)) {
+                $modMiddlewarePath = $moduleConfigDir . 'middleware.php';
                 if (is_file($modMiddlewarePath)) {
                     $app->middleware->import(include $modMiddlewarePath, 'route');
                 }
 
-
                 $commands = [];
-                $moduleConfigDir = $this->addonsPath . $module . DS . 'config' . DS;
                 if (is_dir($moduleConfigDir)) {
                     $files = [];
                     $files = array_merge($files, glob($moduleConfigDir . '*' . $app->getConfigExt()));
